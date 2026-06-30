@@ -2600,7 +2600,8 @@ foreach ($criticalobject in $criticalobjects)
 
 					if($isgcanduniversalorindom -and $objgrp."msDS-ReplValueMetadata")
 						{
-						$metadasgrp = $objgrp."msDS-ReplValueMetadata" | foreach-object{ ([xml] $_.Replace("`0","")).DS_REPL_VALUE_META_DATA}
+						$metadasgrp = $objgrp."msDS-ReplValueMetadata" | foreach-object{ ([xml] $_.Replace("`0","").Replace("&","&amp;")).DS_REPL_VALUE_META_DATA}
+
 					if($error)
         				{ "$(Get-TimeStamp) Error while parsing AD replication metadata attributes msDS-ReplValueMetadata for $($criticalobject.DistinguishedName) $($error)" | out-file $logfilename -append ; $error.clear() }
 			else
@@ -2663,7 +2664,7 @@ foreach ($criticalobject in $criticalobjects)
             { "$(Get-TimeStamp) Error while retrieving AD replication metadata attributes msDS-ReplValueMetadata for $($criticalobject.DistinguishedName) $($error)" | out-file $logfilename -append ; $error.clear() }
 
 		if($objpers."msDS-ReplValueMetadata")
-            {$metadaspers = $objpers."msDS-ReplValueMetadata" | foreach-object{ ([xml] $_.Replace("`0","")).DS_REPL_VALUE_META_DATA}
+            {$metadaspers = $objpers."msDS-ReplValueMetadata" | foreach-object{ ([xml] $_.Replace("`0","").Replace("&","&amp;")).DS_REPL_VALUE_META_DATA}
 
 			if($error)
         			{ "$(Get-TimeStamp) Error while parsing AD replication metadata attributes msDS-ReplValueMetadata for $($criticalobject.DistinguishedName) $($error)" | out-file $logfilename -append ; $error.clear() }
